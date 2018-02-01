@@ -1,3 +1,8 @@
-﻿<? xml version="1.0" encoding="utf-8" ?>
-<configuration>
-</configuration>
+﻿namespace PortfolioNET.ViewModels
+{
+	public class LoginViewModel
+	{
+		public string Email { get; set; }
+		public string Password { get; set; }
+	}
+}

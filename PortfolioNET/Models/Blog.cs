@@ -1,57 +1,17 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
-using PortfolioNET.Models;
-using PortfolioNET.ViewModels;
-using Microsoft.AspNetCore.Identity;
-using System.Security.Claims;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace PortfolioNET.Controllers
+namespace PortfolioNET.Models
 {
-	[Authorize]
-	public class PostController : Controller
+	[Table("Posts")]
+	public class Post
 	{
-		private readonly ApplicationDbContext _db;
-		private readonly UserManager<ApplicationUser> _userManager;
-
-		public PostController(UserManager<ApplicationUser> userManager, ApplicationDbContext db)
-		{
-			_userManager = userManager;
-			_db = db;
-		}
-
-		public async Task<IActionResult> Index()
-		{
-			var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-			var currentUser = await _userManager.FindByIdAsync(userId);
-			return View(_db.Posts.Where(x => x.User.Id == currentUser.Id));
-		}
-
-		public IActionResult Create()
-		{
-			return View();
-		}
-
-		[HttpPost]
-		public async Task<IActionResult> Create(Post post)
-		{
-			var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-			var currentUser = await _userManager.FindByIdAsync(userId);
-			post.User = currentUser;
-			_db.Posts.Add(post);
-			_db.SaveChanges();
-			return RedirectToAction("Index");
-		}
-
-		public IActionResult DisplayObject()
-		{
-			return Json(_db.Posts.Where(x => x.Id == 1));
-		}
-
-		public IActionResult HelloAjax()
-		{
-			return Content("Hello from the controller!", "text/plain");
-		}
+		[Key]
+		public int Id { get; set; }
+		public string Title { get; set; }
+		public string Content { get; set; }
+		//public virtual ApplicationUser User { get; set; }
+		public virtual ICollection<Comment> Comments { get; set; }
 	}
 }

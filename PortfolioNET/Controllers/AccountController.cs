@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using PortfolioNET.Models;
 using System.Threading.Tasks;
 using PortfolioNET.ViewModels;
+using Microsoft.AspNetCore.Identity;
 
 namespace PortfolioNET.Controllers
 {
@@ -71,4 +72,9 @@ namespace PortfolioNET.Controllers
 		}
 	}
 
+    public class CreateAccountViewModel
+    {
+        public object Email { get; internal set; }
+        public object Password { get; internal set; }
+    }
 }

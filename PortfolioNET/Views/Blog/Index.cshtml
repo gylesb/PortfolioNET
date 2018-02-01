@@ -1,5 +1,72 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "Daniel Cheng - Blog";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+@model IEnumerable<PortfolioWebpage.Models.Blog>
+
+<script>
+    $(document).ready(function () {
+
+        $('.create-post').click(function () {
+            $('.new-blog-post').show();
+        });
+
+        $('.new-blog-post').submit(function (event) {
+            event.preventDefault();
+            $.ajax({
+                url: '@Url.Action("CreateBlogPost")',
+                type: 'POST',
+                data: $(this).serialize(),
+                success: function () {
+                    $('#blogtitle').val('');
+                    $('#blogcontent').val('');
+                    $(this).hide();
+                }
+            });
+        });
+
+    });
+</script>
+
+<div class="jumbotron">
+    <h1>Blog</h1>
+    <h3>Interests and Passions</h3>
+</div>
+
+<button class="btn btn-default create-post">Create Post</button>
+
+<form action="CreateBlogPost" class="new-blog-post form-group" style="display: none;">
+    <br />
+    <input class="form-control" name="blogtitle" id="blogtitle" type="text" placeholder="Blog Title" />
+    <br>
+    <textarea class="form-control" style="height: 200px;" name="blogcontent" id="blogcontent" type="text" placeholder="Insert Content Here"></textarea>
+    <br>
+    <button class="btn btn-info" type="submit">Submit</button>
+    <hr />
+</form>
+<hr />
+
+<div id="blog-post">
+    @foreach (var post in Model)
+    {
+    <div class="well">
+        <h2>@Html.DisplayFor(x => post.Title)</h2>
+        <p>@Html.DisplayFor(x => post.Content)</p>
+        <hr />
+
+
+        <form action="CreateNewComment" class="form-group">
+            <br />
+            <input class="form-control" name="commentauthor" id="commentauthor" type="text" placeholder="Author Name" />
+            <br>
+            <textarea class="form-control" style="height: 60px;" name="commentcontent" id="commentcontent" type="text" placeholder="Insert Comment Here"></textarea>
+            <br>
+            <button class="btn btn-info" type="submit">Submit</button>
+            <hr />
+        </form>
+    </div>
+
+    }
+</div>
+
