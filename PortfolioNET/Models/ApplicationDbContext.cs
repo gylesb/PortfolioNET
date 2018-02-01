@@ -23,7 +23,7 @@ namespace PortfolioNET.Models
 
 		protected override void OnConfiguring(DbContextOptionsBuilder options)
 		{
-			options.UseMySql(@"Server=localhost;Port=8889;database=myportfolio;uid=root;pwd=root;");
+			options.UseMySql(@"Server=localhost;Port=8889;database=myPortfolio;uid=root;pwd=root;");
 		}
 
 		protected override void OnModelCreating(ModelBuilder builder)

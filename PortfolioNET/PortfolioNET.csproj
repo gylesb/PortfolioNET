@@ -26,7 +26,6 @@
     <Folder Include="ViewModels\" />
     <Folder Include="Views\Account\" />
     <Folder Include="Views\Blog\" />
-    <Folder Include="Views\Comment\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
 </Project>
